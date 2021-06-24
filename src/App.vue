@@ -6,6 +6,49 @@
   <router-view />
 </template>
 
+<script>
+import {
+  createTables,
+  dropTables,
+  importTwoTeams,
+  importTwelveMembers,
+} from "@/utils/utils-db";
+
+export default {
+  name: "App",
+  mounted() {
+    this.initDB();
+  },
+  methods: {
+    async initDB() {
+      // Get shared SQLite connection
+      const sqliteConnection = this.$sqliteConnection;
+      let db;
+      if (
+        !sqliteConnection.isConnection("MY_DB") ||
+        !sqliteConnection.checkConnectionConsistency()
+      ) {
+        // Create a connection to the MY_DB db
+        db = await sqliteConnection.createConnection("MY_DB", false);
+      } else {
+        // Get existing db connection
+        db = await sqliteConnection.retrieveConnection("MY_DB");
+      }
+      // Open the MY_DB db
+      await db.open();
+      // Drop existing db tables for testing purposes
+      await db.execute(dropTables);
+      // Create the db tables if they don't already exist
+      await db.execute(createTables);
+      // Add some sample data to the tables
+      await db.execute(importTwoTeams);
+      await db.execute(importTwelveMembers);
+      // await sqliteConnection.closeConnection("MY_DB", false);
+    },
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
