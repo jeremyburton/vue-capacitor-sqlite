@@ -1,0 +1,6 @@
+{
+  "appId": "app.clevercrow.vuecapacitorsqlite",
+  "appName": "vue-capacitor-sqlite",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
