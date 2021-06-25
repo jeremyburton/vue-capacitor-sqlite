@@ -37,12 +37,12 @@ export default {
       ) {
         // Create a connection to the MY_DB db
         db = await sqliteConnection.createConnection("MY_DB", false);
+        // Open the MY_DB db
+        await db.open();
       } else {
         // Get existing db connection
         db = await sqliteConnection.retrieveConnection("MY_DB");
       }
-      // Open the MY_DB db
-      await db.open();
       // Query the MY_DB db for all teams
       let res = await db.query("SELECT * FROM teams");
       // Store teams
