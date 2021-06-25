@@ -24,6 +24,7 @@ export default {
       // Get shared SQLite connection
       const sqliteConnection = this.$sqliteConnection;
       // Create a connection to the MY_DB db
+      console.log("Make initial connection to db...");
       let db = await sqliteConnection.createConnection("MY_DB", false);
       // Open the MY_DB db
       await db.open();

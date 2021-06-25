@@ -31,6 +31,7 @@ export default {
       // Retrieve exisiting sqlite connection
       const sqliteConnection = this.$sqliteConnection;
       let db;
+      console.log("Check if we have an exisiting connection...");
       if (
         !sqliteConnection.isConnection("MY_DB") ||
         !sqliteConnection.checkConnectionConsistency()
@@ -45,6 +46,7 @@ export default {
       }
       // Query the MY_DB db for all teams
       let res = await db.query("SELECT * FROM teams");
+      console.log("Query result: ", res);
       // Store teams
       this.teams = res.values;
       // Close database connection
