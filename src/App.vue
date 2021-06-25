@@ -23,19 +23,10 @@ export default {
     async initDB() {
       // Get shared SQLite connection
       const sqliteConnection = this.$sqliteConnection;
-      let db;
-      if (
-        !sqliteConnection.isConnection("MY_DB") ||
-        !sqliteConnection.checkConnectionConsistency()
-      ) {
-        // Create a connection to the MY_DB db
-        db = await sqliteConnection.createConnection("MY_DB", false);
-        // Open the MY_DB db
-        await db.open();
-      } else {
-        // Get existing db connection
-        db = await sqliteConnection.retrieveConnection("MY_DB");
-      }
+      // Create a connection to the MY_DB db
+      let db = await sqliteConnection.createConnection("MY_DB", false);
+      // Open the MY_DB db
+      await db.open();
       // Drop existing db tables for testing purposes
       await db.execute(dropTables);
       // Create the db tables if they don't already exist
