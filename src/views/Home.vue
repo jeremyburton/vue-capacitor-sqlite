@@ -1,57 +1,28 @@
 <template>
   <div class="home">
-    <h1>Teams</h1>
-    <ul>
-      <li v-for="team in teams" :key="team.id">
-        <router-link :to="'/teams/' + team.id + '/groups'">{{
-          team.name
-        }}</router-link>
-        <class-actions />
-      </li>
-    </ul>
+    <Suspense>
+      <template #default>
+        <Teams />
+      </template>
+      <template #feedback>
+        <div>Loading ...</div>
+      </template>
+    </Suspense>
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from "vue";
 export default {
   name: "Home",
-  data() {
-    return {
-      teams: [
-        // { id: 1, name: "Team 1", last_modified: 1624370619 },
-        // { id: 2, name: "Team 2", last_modified: 1624370619 },
-      ],
-    };
-  },
-  mounted() {
-    this.getTeams();
-  },
-  methods: {
-    async getTeams() {
-      // Retrieve exisiting sqlite connection
-      const sqliteConnection = this.$sqliteConnection;
-      let db;
-      console.log("Check if we have an exisiting connection...");
-      if (
-        !sqliteConnection.isConnection("MY_DB") ||
-        !sqliteConnection.checkConnectionConsistency()
-      ) {
-        // Create a connection to the MY_DB db
-        db = await sqliteConnection.createConnection("MY_DB", false);
-        // Open the MY_DB db
-        await db.open();
-      } else {
-        // Get existing db connection
-        db = await sqliteConnection.retrieveConnection("MY_DB");
-      }
-      // Query the MY_DB db for all teams
-      let res = await db.query("SELECT * FROM teams");
-      console.log("Query result: ", res);
-      // Store teams
-      this.teams = res.values;
-      // Close database connection
-      // await sqliteConnection.closeConnection("MY_DB", false);
-    },
+  components: {
+    Teams: defineAsyncComponent(() => import("@/components/Teams.vue")),
   },
 };
 </script>
+
+<style>
+.home {
+  margin: 4rem 0;
+}
+</style>
