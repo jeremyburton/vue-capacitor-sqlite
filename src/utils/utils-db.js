@@ -34,7 +34,7 @@ export const createTables = `
   PRAGMA user_version = 1;
 `;
 
-export const importTwoTeams = `
+export const importFourTeams = `
   DELETE FROM teams;
   INSERT INTO teams (name) VALUES ("7SVZ");
   INSERT INTO teams (name) VALUES ("7DAN");

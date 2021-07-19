@@ -5,7 +5,7 @@ import router from "./router";
 import {
   createTables,
   dropTables,
-  importTwoTeams,
+  importFourTeams,
   importTwelveMembers,
 } from "@/utils/utils-db";
 
@@ -29,7 +29,7 @@ const initDB = async () => {
     ret = await db.execute(createTables);
     console.log(`$$$ Execute 2: ${JSON.stringify(ret)} $$$`);
     // Add some sample data to the tables
-    ret = await db.execute(importTwoTeams);
+    ret = await db.execute(importFourTeams);
     console.log(`$$$ Execute 3: ${JSON.stringify(ret)} $$$`);
     ret = await db.execute(importTwelveMembers);
     console.log(`$$$ Execute 4: ${JSON.stringify(ret)} $$$`);
