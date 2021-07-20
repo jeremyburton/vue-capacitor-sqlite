@@ -27,8 +27,8 @@ export default {
       let db;
       console.log("Check if we have an exisiting db connection...");
       if (
-        !(await sqliteConnection.isConnection("MY_DB")) ||
-        !sqliteConnection.checkConnectionConsistency()
+        !(await sqliteConnection.isConnection("MY_DB")).result ||
+        !(await sqliteConnection.checkConnectionsConsistency()).result
       ) {
         // Create a connection to the MY_DB db
         console.log("Create a connection to the db...");
